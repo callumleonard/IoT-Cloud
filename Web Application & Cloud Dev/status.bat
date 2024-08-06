@@ -1,0 +1,1 @@
+grep -w -o "Host is up" test.txt > status.txt

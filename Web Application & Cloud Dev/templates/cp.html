@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exp-IoMT Control Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+    <link rel="stylesheet" href="static/css/styles.min.css">
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean">
+            <div class="container-fluid"><a class="navbar-brand exp" href="{{url_for('login')}}" style="color:#000000;">exp-IoMT • Control Panel</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div
+                    class="collapse navbar-collapse" id="navcol-1"></div>
+             </div>
+        </nav>
+        
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-5">
+                <h2 class="exppp">Scan network for vulnerability scanners</h2>
+              
+                <a href="#" id="scanButton" onclick="progress()">Start Scan</a>
+                <p class="scanprogress">Scanner Identification Progress:</p>
+                <div class="progress-bar" style="--width: 0" data-label=""></div>  
+                <p class="scanprogress">Scanners Found:</p>
+            </div>
+            <div class="col-2">
+
+            </div>
+            <div class="col-5">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="exploit">Exploit.</h2>
+                        <h3 class="vulnerable">The following IoMT devices were found to be vulnerable:</h3>
+                    </div>
+                </div>
+                <div class="row expy">
+                    <div class="col-4">
+                        <p class="ipAddr2 text-center">IP Address</p>
+                            
+                        <div class="file-contents text-left"></div>
+                    </div> 
+                    <div class="col-4">
+                        <p class="macAddr2 text-center">MAC Address</p>
+                               
+                        <div class="mac-contents"></div>
+                    </div>
+                         
+                    <div class="col-4">
+                        <p class="type2 text-center">Status</p>
+                              
+                        <div class="vuln-contents"></div>
+                    </div>
+                </div>     
+            </div>
+        </div>
+        
+       <div class="row">
+        <div class="col-5">
+            <div class="row alr">
+                <div class="col-4 first">
+                    <p class="ipAddr text-center">IP Address</p>
+                    <div class="results">
+                        <div class="file-contents"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <p class="macAddr text-center">MAC Address</p>
+                    <div class="results">
+                        <div class="mac-contents"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <p class="type text-center">Status</p>
+                    <div class="results">
+                        <div class="status-contents text-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <h3 class="vulnerable">Do you wish to launch PoC Exploit against IoMT device?</h3>
+            <a href="#" class="yButton" onclick="launchExploit()">Yes</a>
+            <a href="#" class="nButton" onclick="hideExploit()">No</a>
+            <div id="launchDiv" style="display:none">
+                <p class="scannprogress">Refining and launching exploit:</p>
+                <p class="developmentt">Important: Please physically examine CMS readings for IoMT device.</p>
+                <div class="progress-barr" style="--width: 0" data-label=""></div> 
+            </div>
+            
+        </div>
+        
+            
+       </div>
+       <div class="row">
+            <div class="col-5">
+                <h2 class="vuln">Execute Vulnerability Scan</h2>
+                <p class="scanprogress">Utilise all scanners found to scan for vulnerabilities?</p>
+                <a href="#" class="yesButton">Yes</a>
+                <a href="#" class="noButton">No</a>
+                <p class="development">Note: Utilising all scanners functionality is currently still under development.</p>     
+            </div>
+            <div class="col-2"></div>
+            <div class="col-5">
+                <h2 class="report">Scan Report</h2>
+                <a href="#" id="displayButton">Display PDF</a>
+                <p>Test, the report should be below:</p>
+                <div id="ff-contents"></div>
+            </div>
+       </div>
+        <div class="row">
+            <div class="col-2">
+                <p class="ipAdddr text-center">IP Address</p>
+                <div class="resultor">
+                    <div class="file-contents"></div>
+                </div>
+            </div>
+            <div class="col-2">
+                <p class="sub-scan text-left">Subnet to Scan:</p>
+                <p class="develop">e.g. 192.168.1.0/24</p>
+                <div class="text-left">
+                    <form id="submit_scan">
+                        <input type="text" id="range_toScan" name="fname"><br><br>
+                        <input class="go" type="button" onclick="progress_scan()" value="Launch Scan!">
+                      </form>
+                </div>
+            </div>
+            <div class="col-8"></div>
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <p class="scanprogress">Vulnerability Scan Identification Progress:</p>
+                <div class="progress-barScan" style="--width: 0" data-label=""></div> 
+            </div>
+            <div class="col-2"></div>
+            <div class="col-5"></div>
+        </div>
+        
+    </div>
+    
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
+    <script type="text/javascript">
+
+        
+      
+        function progress()
+        {
+          
+            const progressBar = document.getElementsByClassName('progress-bar')[0]
+                setInterval(() => {
+                const computedStyle = getComputedStyle(progressBar)
+                const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
+                progressBar.style.setProperty('--width', width + .1)
+                }, 40)
+
+            $.getJSON('/openexe',
+            function(data) {
+                    console.log(data);
+                    $(".file-contents").text(data.file);
+            });
+
+            progressUpdatedten()
+        }
+
+        function progress_scan()
+        {
+            
+            const progressBar = document.getElementsByClassName('progress-barScan')[0]
+                setInterval(() => {
+                const computedStyle = getComputedStyle(progressBar)
+                const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
+                progressBar.style.setProperty('--width', width + .1)
+                }, 35)
+
+            $.getJSON('/launchScan',
+            function(data) {
+                    console.log(data);
+                    $(".vuln-contents").text(data.file);
+            });
+        }
+
+        function progressUpdatedten()
+        {
+            $.getJSON('/mac',
+            function(data) {
+                    console.log(data);
+                    $(".mac-contents").text(data.file);
+            });
+
+           
+            status()
+        }
+
+        function status()
+        {
+            $.getJSON('/status',
+            function(data) {
+                    console.log(data);
+                    $(".status-contents").text(data.file);
+            });
+        }
+
+        function launchExploit()
+        {
+            var T = document.getElementById("launchDiv");
+            T.style.display = "block"; 
+
+            const progressBar = document.getElementsByClassName('progress-barr')[0]
+                setInterval(() => {
+                const computedStyle = getComputedStyle(progressBar)
+                const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
+                progressBar.style.setProperty('--width', width + .1)
+                }, 10)
+
+                $.getJSON('/exploit',
+            function(data) {
+                    console.log(data);
+            });
+        }
+
+        function hideExploit()
+        {
+            var T = document.getElementById("launchDiv");
+            T.style.display = "none"; 
+
+           
+       
+        }
+    </script>
+ 
+</body>
+
+</html>
